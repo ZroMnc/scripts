@@ -1,0 +1,16 @@
+#!/usr/bin/perl
+#
+# get the relevant claims part from the id_token
+use strict;
+use MIME::Base64;
+
+my $id_token = $ARGV[0];
+if (!$id_token) {
+    print "Usage: $0 <id_token>\n";
+    exit(1);
+}
+chomp($id_token);
+
+my ($head_seg, $payload_seg, $sign_seg) = split(/\./,$id_token);
+print "Header: ".decode_base64($head_seg)."\n";
+print "Payload: ".decode_base64($payload_seg)."\n";
