@@ -11,7 +11,7 @@ urlencode() {
 
 user=amadmin
 pass=$(cat /opt/openam/config/.pass)
-uri=https://itr-am01.greendale.zalando.net:443
+uri=https://aws-am01.greendale.zalan.do:443
 
 tokenid=$(curl -s -X POST -H "X-OpenAM-Username: $user" -H "X-OpenAM-Password: $pass" -H 'Content-Type: application/json' -d '{}' -k $uri/z/json/authenticate | jq '.["tokenId"]' | sed -e 's/\"//g')
 formtoken=$(curl -k -X POST -d 'category=Federation&level=3' -H "Cookie: ZalandoSSO=$tokenid" $uri/z/Debug.jsp | grep '<input type="hidden" name="formToken" value=' | awk '{ print $4 }' | sed -e 's/value=\"//' | sed -e 's/\"//')
